@@ -3,10 +3,9 @@ package com.AppControleParcelamento.AppControleParcelamentoapi.model;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NonNull;
+
 import lombok.Setter;
-import org.antlr.v4.runtime.misc.NotNull;
-import org.hibernate.annotations.NotFound;
+
 
 
 @EqualsAndHashCode (onlyExplicitlyIncluded = true) // Apenas os campos marcados com a anotação @EqualsAndHashCode.Include serão considerados na geração dos métodos equals() e hashCode().
