@@ -1,7 +1,9 @@
 package com.AppControleParcelamento.AppControleParcelamentoapi.controller;
 
 import com.AppControleParcelamento.AppControleParcelamentoapi.Repository.ClienteRepository;
+import com.AppControleParcelamento.AppControleParcelamentoapi.exception.NegocioException;
 import com.AppControleParcelamento.AppControleParcelamentoapi.model.Cliente;
+import com.AppControleParcelamento.AppControleParcelamentoapi.service.ClienteService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Id;
 import jakarta.persistence.PersistenceContext;
@@ -20,13 +22,16 @@ import java.util.Optional;
 @RequestMapping("/clientes")
 public class ClienteController {
 
-  /*  @PersistenceContext //instancia manager
-    private EntityManager manager; //USADA PARA FAZER OPERACOES COM AS ENTIDADES DO BANCO DE DADOS.
-   */
+    /*  @PersistenceContext //instancia manager
+      private EntityManager manager; //USADA PARA FAZER OPERACOES COM AS ENTIDADES DO BANCO DE DADOS.
+     */
+
+    @Autowired
+    private final ClienteService clienteService;
 
     @Autowired
     //injetar dependencia de forma automática pelo Spring -  uma determinada classe precisa de uma instância de outra classe
-    private ClienteRepository clienteRepository;
+    private final ClienteRepository clienteRepository;
 
     @GetMapping()
     public List<Cliente> listar() {
@@ -50,15 +55,12 @@ public class ClienteController {
 
 
 
-
     @ResponseStatus(HttpStatus.CREATED) //CÓDIGO HTTP 201
     @PostMapping
     public Cliente adicionarCliente(@Valid @RequestBody Cliente cliente) {
-        return clienteRepository.save(cliente);
+        return clienteService.salvar(cliente);
+
     }
-
-
-
 
 
     @PutMapping("/{clienteId}")
@@ -67,7 +69,7 @@ public class ClienteController {
             return ResponseEntity.notFound().build();
         }
         cliente.setId(clienteId);
-        cliente = clienteRepository.save(cliente);
+        cliente = clienteService.salvar(cliente);
 
         return ResponseEntity.ok(cliente);
     }
@@ -92,12 +94,18 @@ public class ClienteController {
 
 
     @DeleteMapping("/{clienteId}")
-    public ResponseEntity<Void> excluirPorId(@PathVariable Long clienteId){  //retorna um response entity sem corpo algum ResponseEntity<Void>
+    public ResponseEntity<Void> excluirPorId(@PathVariable Long clienteId) {  //retorna um response entity sem corpo algum ResponseEntity<Void>
         if (!clienteRepository.existsById(clienteId)) {
             return ResponseEntity.notFound().build();
         }
-        clienteRepository.deleteById(clienteId);
-        return  ResponseEntity.noContent().build(); //código204
+        clienteService.deletar(clienteId);
+        return ResponseEntity.noContent().build(); //código204
+    }
+
+    @ExceptionHandler(NegocioException.class)
+    public ResponseEntity<String> capturar(NegocioException e){
+        return ResponseEntity.badRequest().body(e.getMessage());
+
     }
 }
 
