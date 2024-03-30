@@ -15,7 +15,7 @@ public class ClienteService {
     @Autowired
     private final ClienteRepository clienteRepository;
 
-    @Transactional
+    @Transactional //salvar poderá ser usado tanto para criar cliente como para atualizar
     public Cliente salvar(Cliente cliente) {
         boolean emailEmUso = clienteRepository.findByEmail(cliente.getEmail()) //evitar que clientes sejam cadastrados com mesmo email
                 .filter(c -> !c.equals(cliente)) //permite atualizar cliente sem dar duplicidade de email
