@@ -5,6 +5,7 @@ import com.AppControleParcelamento.AppControleParcelamentoapi.model.Cliente;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Id;
 import jakarta.persistence.PersistenceContext;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,6 @@ public class ClienteController {
     private EntityManager manager; //USADA PARA FAZER OPERACOES COM AS ENTIDADES DO BANCO DE DADOS.
    */
 
-
     @Autowired
     //injetar dependencia de forma automática pelo Spring -  uma determinada classe precisa de uma instância de outra classe
     private ClienteRepository clienteRepository;
@@ -33,28 +33,36 @@ public class ClienteController {
         return clienteRepository.findAll();
     }
 
-    //return manager.createQuery("from Cliente", Cliente.class)
+    //return man
+    // ager.createQuery("from Cliente", Cliente.class)
     //   .getResultList(); // transforma o resultado em SQL, pegar o resultado e converter em instancias de cliente e retorna lista  de cliente
 
     @GetMapping("/{clienteId}")
     public ResponseEntity<Cliente> buscarPorId(@PathVariable Long clienteId) {
-        Optional<Cliente> cliente = clienteRepository.findById(clienteId);
+        Optional<Cliente> cliente = clienteRepository.findById(clienteId); //Optional é como um container que pode conter algo ou não
 
         if (cliente.isPresent()) {
             return ResponseEntity.ok(cliente.get());
 
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.notFound().build(); //caso nao haja o id, retorna codigo http 404
     }
+
+
+
 
     @ResponseStatus(HttpStatus.CREATED) //CÓDIGO HTTP 201
     @PostMapping
-    public Cliente adicionarCliente(@RequestBody Cliente cliente) {
+    public Cliente adicionarCliente(@Valid @RequestBody Cliente cliente) {
         return clienteRepository.save(cliente);
     }
 
+
+
+
+
     @PutMapping("/{clienteId}")
-    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long clienteId, @RequestBody Cliente cliente) {
+    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long clienteId, @Valid @RequestBody Cliente cliente) {
         if (!clienteRepository.existsById(clienteId)) {
             return ResponseEntity.notFound().build();
         }
@@ -66,7 +74,7 @@ public class ClienteController {
 
 
     //--------------------------------------
-    /* Deste modo, será necessário colocar o id no payload - o que naõ é o ideal, mas sim na url
+    /* Deste modo, será necessário colocar o id no payload para buscar o cliente a ser atualizado - o que naõ é o ideal, mas sim na url
 
     exemplo: {"id": "3",
     "nome": "Manu Barbosa",
@@ -84,12 +92,12 @@ public class ClienteController {
 
 
     @DeleteMapping("/{clienteId}")
-    public ResponseEntity<Void> excluirPorId(@PathVariable Long clienteId){
+    public ResponseEntity<Void> excluirPorId(@PathVariable Long clienteId){  //retorna um response entity sem corpo algum ResponseEntity<Void>
         if (!clienteRepository.existsById(clienteId)) {
             return ResponseEntity.notFound().build();
         }
         clienteRepository.deleteById(clienteId);
-        return  ResponseEntity.noContent().build();
+        return  ResponseEntity.noContent().build(); //código204
     }
 }
 

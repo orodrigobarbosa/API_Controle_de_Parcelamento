@@ -10,9 +10,7 @@ import java.util.Optional;
 @Repository //componente que faz persistência de dados, gerenciada pelo próprio container do Spring
 public interface ClienteRepository extends JpaRepository<Cliente, Long> { //entidade que o repositório irá gerenciar
 
-    public List<Cliente> findByNome(String nome);
 
-    public List<Cliente> findByNomeContaining(String nome);
 
 
 }
