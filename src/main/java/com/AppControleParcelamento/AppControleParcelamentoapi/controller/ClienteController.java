@@ -4,9 +4,7 @@ import com.AppControleParcelamento.AppControleParcelamentoapi.Repository.Cliente
 import com.AppControleParcelamento.AppControleParcelamentoapi.exception.NegocioException;
 import com.AppControleParcelamento.AppControleParcelamentoapi.model.Cliente;
 import com.AppControleParcelamento.AppControleParcelamentoapi.service.ClienteService;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Id;
-import jakarta.persistence.PersistenceContext;
+
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

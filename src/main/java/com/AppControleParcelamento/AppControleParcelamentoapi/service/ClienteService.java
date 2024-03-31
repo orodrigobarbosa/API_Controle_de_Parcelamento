@@ -15,6 +15,10 @@ public class ClienteService {
     @Autowired
     private final ClienteRepository clienteRepository;
 
+    public Cliente buscar(Long clienteId){
+       return clienteRepository.findById(clienteId).orElseThrow(() -> new NegocioException("Cliente nao encontrado"));
+    }
+
     @Transactional //salvar poderá ser usado tanto para criar cliente como para atualizar
     public Cliente salvar(Cliente cliente) {
         boolean emailEmUso = clienteRepository.findByEmail(cliente.getEmail()) //evitar que clientes sejam cadastrados com mesmo email
