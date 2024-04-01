@@ -1,5 +1,6 @@
 package com.AppControleParcelamento.AppControleParcelamentoapi.model;
 
+import com.AppControleParcelamento.AppControleParcelamentoapi.validation.ValidationGroups;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.EqualsAndHashCode;
@@ -17,6 +18,7 @@ import lombok.Setter;
 
 public class Cliente {
 
+    @NotNull (groups = ValidationGroups.ClienteId.class)
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

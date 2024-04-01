@@ -40,7 +40,7 @@ public class ParcelamentoController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Parcelamento cadastrar(@RequestBody Parcelamento parcelamento){
+    public Parcelamento cadastrar(@Valid @RequestBody Parcelamento parcelamento){
         return parcelamentoService.cadastrar(parcelamento);
     }
 
