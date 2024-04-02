@@ -1,4 +1,4 @@
-package com.AppControleParcelamento.AppControleParcelamentoapi.Repository;
+package com.AppControleParcelamento.AppControleParcelamentoapi.repository;
 
 
 import com.AppControleParcelamento.AppControleParcelamentoapi.model.Parcelamento;

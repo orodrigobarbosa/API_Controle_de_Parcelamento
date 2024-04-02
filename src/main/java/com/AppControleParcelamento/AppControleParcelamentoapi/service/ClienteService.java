@@ -1,6 +1,6 @@
 package com.AppControleParcelamento.AppControleParcelamentoapi.service;
 
-import com.AppControleParcelamento.AppControleParcelamentoapi.Repository.ClienteRepository;
+import com.AppControleParcelamento.AppControleParcelamentoapi.repository.ClienteRepository;
 import com.AppControleParcelamento.AppControleParcelamentoapi.exception.NegocioException;
 import com.AppControleParcelamento.AppControleParcelamentoapi.model.Cliente;
 import jakarta.transaction.Transactional;

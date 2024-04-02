@@ -1,6 +1,6 @@
 package com.AppControleParcelamento.AppControleParcelamentoapi.controller;
 
-import com.AppControleParcelamento.AppControleParcelamentoapi.Repository.ClienteRepository;
+import com.AppControleParcelamento.AppControleParcelamentoapi.repository.ClienteRepository;
 import com.AppControleParcelamento.AppControleParcelamentoapi.exception.NegocioException;
 import com.AppControleParcelamento.AppControleParcelamentoapi.model.Cliente;
 import com.AppControleParcelamento.AppControleParcelamentoapi.service.ClienteService;
@@ -102,10 +102,6 @@ public class ClienteController {
         return ResponseEntity.noContent().build(); //código204
     }
 
-    @ExceptionHandler(NegocioException.class)
-    public ResponseEntity<String> capturar(NegocioException e){
-        return ResponseEntity.badRequest().body(e.getMessage());
 
-    }
 }
 
