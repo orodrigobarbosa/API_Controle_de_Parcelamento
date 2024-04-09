@@ -1,8 +1,8 @@
 package com.AppControleParcelamento.AppControleParcelamentoapi.controller;
 
 import com.AppControleParcelamento.AppControleParcelamentoapi.repository.ParcelamentoRepository;
-import com.AppControleParcelamento.AppControleParcelamentoapi.exception.NegocioException;
 import com.AppControleParcelamento.AppControleParcelamentoapi.model.Parcelamento;
+import com.AppControleParcelamento.AppControleParcelamentoapi.representationmodel.ParcelamentoModel;
 import com.AppControleParcelamento.AppControleParcelamentoapi.service.ParcelamentoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -30,8 +30,22 @@ public class ParcelamentoController {
     }
 
     @GetMapping("/{parcelamentoId}")
-    public ResponseEntity<Parcelamento> buscar(@PathVariable Long parcelamentoId) {
-        return parcelamentoRepository.findById(parcelamentoId).map(ResponseEntity::ok)
+    public ResponseEntity<ParcelamentoModel> buscar(@PathVariable Long parcelamentoId) {
+        return parcelamentoRepository.findById(parcelamentoId)
+                .map(parcelamento -> {
+                    var parcelamentoModel = new ParcelamentoModel();
+                    parcelamentoModel.setId(parcelamento.getId());
+                    parcelamentoModel.setNomeCliente(parcelamento.getCliente().getNome());
+                    parcelamentoModel.setDescricao(parcelamento.getDescricao());
+                    parcelamentoModel.setValorTotal(parcelamento.getValorTotal());
+                    parcelamentoModel.setParcelas(parcelamento.getQuantidadeParcelas());
+                    parcelamentoModel.setDataCriacao(parcelamento.getDataCriacao());
+
+
+                    return ResponseEntity.ok(parcelamentoModel);
+
+
+                })
                 .orElse(ResponseEntity.notFound().build());
 
     }
