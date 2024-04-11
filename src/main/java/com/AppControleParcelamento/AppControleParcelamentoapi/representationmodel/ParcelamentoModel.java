@@ -8,7 +8,7 @@ import java.time.OffsetDateTime;
 
 @Getter
 @Setter
-public class ParcelamentoModel {
+public class ParcelamentoModel { //REPRESENTATION MODEL
 
 
     private Long id;
